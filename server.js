@@ -15,15 +15,18 @@ function renderPage(content) {
 initial-scale=1.0" />
 
         <!-- Google Font -->
-        <link 
-href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" 
+<link 
+href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital@0;1&display=swap" 
 rel="stylesheet">
-
         <style>
           body {
             font-family: 'Inter', sans-serif;
-            background: #f8fafc;
-            color: #1e293b;
+background: linear-gradient(
+  135deg,
+  #fdf4ff 0%,
+  #f0f9ff 50%,
+  #fdf2f8 100%
+);            color: #1e293b;
             margin: 0;
             padding: 24px;
             display: flex;
@@ -40,7 +43,12 @@ rel="stylesheet">
             max-width: 480px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.06);
           }
-
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  font-size: 32px;
+  letter-spacing: -0.5px;
+}
           h1, h2 {
             margin-top: 0;
             font-weight: 600;
@@ -134,12 +142,14 @@ rel="stylesheet">
 
 app.get("/", (req, 
 res) => {
-  const emotionOptions = Object.keys(emotionConfig)
-    .map(e => `<option>${e}</option>`)
+const emotionOptions = Object.keys(emotionConfig)
+  .sort()
+  .map(e => 
+`<option>${e}</option>`)
     .join("");
 
   res.send(renderPage(`
-    <h1>MoodMatch 🎧</h1>
+    <h1>MoodMatch</h1>
     <p>Find music that meets you where you are.</p>
 
     <form method="POST" action="/generate">
@@ -154,22 +164,22 @@ res) => {
   <option value="" disabled selected>
     Which genre are you feeling?
   </option>
-  <option>Indie / Alternative</option>
-  <option>Pop</option>
-  <option>Hip-Hop / Rap</option>
-  <option>Electronic</option>
-  <option>R&B</option>
-  <option>Classical</option>
+<option>Classical</option>
+<option>Electronic</option>
+<option>Hip-Hop / Rap</option>
+<option>Indie / Alternative</option>
+<option>Pop</option>
+<option>R&B</option>
 </select>
 
 <select name="platform" required>
   <option value="" disabled selected>
-    Which platform will you be vibing on?
+    Which platform are you vibing on?
   </option>
-  <option value="spotify">Spotify</option>
-  <option value="apple">Apple Music</option>
-  <option value="soundcloud">SoundCloud</option>
-  <option value="youtube">YouTube</option>
+<option value="apple">Apple Music</option>
+<option value="soundcloud">SoundCloud</option>
+<option value="spotify">Spotify</option>
+<option value="youtube">YouTube</option>
 </select>
 
 <button id="generateBtn" type="submit">
