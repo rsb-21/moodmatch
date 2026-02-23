@@ -10,41 +10,117 @@ function renderPage(content) {
     <html>
       <head>
         <title>MoodMatch</title>
+
+        <meta name="viewport" content="width=device-width, 
+initial-scale=1.0" />
+
+        <!-- Google Font -->
+        <link 
+href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" 
+rel="stylesheet">
+
         <style>
           body {
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0f172a;
-            color: white;
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            margin: 0;
+            padding: 24px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            padding: 40px;
           }
+
           .card {
-            background: #1e293b;
-            padding: 40px;
-            border-radius: 16px;
-            width: 500px;
+            background: white;
+            padding: 32px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
           }
+
+          h1, h2 {
+            margin-top: 0;
+            font-weight: 600;
+          }
+
+          p {
+            color: #64748b;
+          }
+
           select, button {
             width: 100%;
-            padding: 12px;
-            margin-top: 12px;
-            border-radius: 8px;
-            border: none;
+            padding: 14px;
+            margin-top: 16px;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
             font-size: 16px;
+            font-family: 'Inter', sans-serif;
           }
+
+          select {
+            background: #f1f5f9;
+          }
+
+          select:focus {
+            outline: none;
+            border-color: #7c3aed;
+          }
+
           button {
-            background: #22c55e;
+            background: #7c3aed;
             color: white;
+            border: none;
+            font-weight: 500;
             cursor: pointer;
+            transition: all 0.2s ease;
           }
-          .yes { background: #22c55e; }
-          .no { background: #ef4444; }
-          li { margin-bottom: 10px; }
-          a { color: #38bdf8; text-decoration: none; }
+
+          button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+          }
+
+          .yes {
+            background: #16a34a;
+          }
+
+          .no {
+            background: #dc2626;
+          }
+
+          ul {
+            padding-left: 18px;
+          }
+
+          li {
+            margin-bottom: 14px;
+          }
+
+          a {
+            color: #7c3aed;
+            text-decoration: none;
+            font-size: 14px;
+          }
+
+          hr {
+            border: none;
+            height: 1px;
+            background: #e2e8f0;
+            margin: 24px 0;
+          }
+
+          /* Mobile spacing tweak */
+          @media (max-width: 480px) {
+            body {
+              padding: 16px;
+            }
+            .card {
+              padding: 24px;
+            }
+          }
         </style>
       </head>
       <body>
@@ -56,7 +132,8 @@ function renderPage(content) {
   `;
 }
 
-app.get("/", (req, res) => {
+app.get("/", (req, 
+res) => {
   const emotionOptions = Object.keys(emotionConfig)
     .map(e => `<option>${e}</option>`)
     .join("");
@@ -66,11 +143,17 @@ app.get("/", (req, res) => {
     <p>Find music that meets you where you are.</p>
 
     <form method="POST" action="/generate">
-      <select name="emotion">
-        ${emotionOptions}
-      </select>
+<select name="emotion" required>
+  <option value="" disabled selected>
+    What's your mood right now?
+  </option>
+  ${emotionOptions}
+</select>
 
-<select name="genre">
+<select name="genre" required>
+  <option value="" disabled selected>
+    Which genre are you feeling?
+  </option>
   <option>Indie / Alternative</option>
   <option>Pop</option>
   <option>Hip-Hop / Rap</option>
@@ -79,11 +162,14 @@ app.get("/", (req, res) => {
   <option>Classical</option>
 </select>
 
-<select name="platform">
+<select name="platform" required>
+  <option value="" disabled selected>
+    Which platform will you be vibing on?
+  </option>
   <option value="spotify">Spotify</option>
   <option value="apple">Apple Music</option>
   <option value="soundcloud">SoundCloud</option>
-  <option value="youtube">YouTube</option> 
+  <option value="youtube">YouTube</option>
 </select>
 
 <button id="generateBtn" type="submit">
