@@ -9,7 +9,7 @@ function renderPage(content) {
   return `
     <html>
       <head>
-        <title>MoodMatch</title>
+        <title>MoodMatch 🎶</title>
 
         <meta name="viewport" content="width=device-width, 
 initial-scale=1.0" />
@@ -23,10 +23,12 @@ rel="stylesheet">
             font-family: 'Inter', sans-serif;
 background: linear-gradient(
   135deg,
-  #fdf4ff 0%,
-  #f0f9ff 50%,
-  #fdf2f8 100%
-);            color: #1e293b;
+  #f6eefe 0%,
+  #eaf6ff 50%,
+  #fbe9f1 100%
+);
+background-attachment: fixed;
+            color: #1e293b;
             margin: 0;
             padding: 24px;
             display: flex;
@@ -34,7 +36,11 @@ background: linear-gradient(
             align-items: center;
             min-height: 100vh;
           }
-
+select {
+  color: #000;
+  -webkit-appearance: none;
+  appearance: none;
+}
           .card {
             background: white;
             padding: 32px;
@@ -78,7 +84,7 @@ h1 {
           }
 
           button {
-            background: #7c3aed;
+            background: #875c96;
             color: white;
             border: none;
             font-weight: 500;
@@ -149,7 +155,7 @@ const emotionOptions = Object.keys(emotionConfig)
     .join("");
 
   res.send(renderPage(`
-    <h1>MoodMatch</h1>
+    <h1>MoodMatch 🎶</h1>
     <p>Find music that meets you where you are.</p>
 
     <form method="POST" action="/generate">
@@ -242,20 +248,39 @@ platform.slice(1)}
   }).join("")}
 </ul>
 
-      <hr/>
+<hr/>
 
-      <p><strong>Did this match how you feel?</strong></p>
+<p><strong>Did this match how you feel?</strong></p>
 
-      <button class="yes" onclick="alert('Glad it resonated ❤️')">
-        Yeah, that’s me
-      </button>
+<div style="display:flex; gap:16px; margin-top:16px;">
+  <button 
+    style="
+      background:white;
+      border:2px solid #875c96;
+      color:#875c96;
+      border-radius:12px;
+      font-size:20px;
+      padding:10px 18px;
+    "
+    onclick="alert('Glad it resonated 💜')"
+  >
+    👍
+  </button>
 
-      <button class="no" onclick="alert('Thank you — that helps us tune 
-better.')">
-        Not quite
-      </button>
-
-      <br/><br/>
+  <button 
+    style="
+      background:white;
+      border:2px solid #875c96;
+      color:#875c96;
+      border-radius:12px;
+      font-size:20px;
+      padding:10px 18px;
+    "
+    onclick="alert('Thank you — that helps us tune better.')"
+  >
+    👎
+  </button>
+</div>      <br/><br/>
       <a href="/">Generate another</a>
     `));
 
