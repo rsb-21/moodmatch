@@ -33,8 +33,9 @@ background-attachment: fixed;
             padding: 24px;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             min-height: 100vh;
+            padding-top: 60px
           }
 select {
   color: #000;
@@ -180,7 +181,7 @@ const emotionOptions = Object.keys(emotionConfig)
 
 <select name="platform" required>
   <option value="" disabled selected>
-    Which platform are you vibing on?
+    What platform do you vibe out on?
   </option>
 <option value="apple">Apple Music</option>
 <option value="soundcloud">SoundCloud</option>
@@ -220,7 +221,7 @@ const { emotion, genre, platform } = req.body;
       <h2>For when you're feeling ${emotion} 🎧</h2>
       <p><em>${genre}</em></p>
 
-<ul>
+<ul style="margin-top:24px;">
   ${playlist.map(song => {
     const searchQuery = encodeURIComponent(song.replace(" - ", " "));
     let url = "";
@@ -236,12 +237,11 @@ const { emotion, genre, platform } = req.body;
     }
 
     return `
-      <li>
+      <li style="margin-bottom:12px;">
         ${song}
         <br/>
         <a href="${url}" target="_blank">
-          🎧 Listen on ${platform.charAt(0).toUpperCase() + 
-platform.slice(1)}
+          🎧 Listen on ${platform.charAt(0).toUpperCase() + platform.slice(1)}
         </a>
       </li>
     `;
@@ -252,8 +252,8 @@ platform.slice(1)}
 
 <p><strong>Did this match how you feel?</strong></p>
 
-<div style="display:flex; gap:16px; margin-top:16px;">
-  <button 
+<div style="display:flex; gap:16px; margin-top:12px;">
+  <button id="thumbUp"
     style="
       background:white;
       border:2px solid #875c96;
@@ -261,13 +261,11 @@ platform.slice(1)}
       border-radius:12px;
       font-size:20px;
       padding:10px 18px;
-    "
-    onclick="alert('Glad it resonated 💜')"
-  >
+    ">
     👍
   </button>
 
-  <button 
+  <button id="thumbDown"
     style="
       background:white;
       border:2px solid #875c96;
@@ -275,12 +273,32 @@ platform.slice(1)}
       border-radius:12px;
       font-size:20px;
       padding:10px 18px;
-    "
-    onclick="alert('Thank you — that helps us tune better.')"
-  >
+    ">
     👎
   </button>
-</div>      <br/><br/>
+</div>
+
+<p id="feedbackMessage" style="
+  margin-top:12px;
+  font-size:14px;
+  color:#6b7280;
+"></p>
+
+<script>
+  const up = document.getElementById("thumbUp");
+  const down = document.getElementById("thumbDown");
+  const message = document.getElementById("feedbackMessage");
+
+  up.addEventListener("click", () => {
+    message.innerText = "Glad it resonated 💜";
+  });
+
+  down.addEventListener("click", () => {
+    message.innerText = "Thank you — that helps us tune better.";
+  });
+</script>
+
+<br/><br/>
       <a href="/">Generate another</a>
     `));
 
